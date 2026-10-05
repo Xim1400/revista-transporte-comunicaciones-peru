@@ -1,0 +1,21 @@
+{
+  "id": "art-016",
+  "slug": "cable-submarino-sudamerica-conexion-asia",
+  "title": "Un nuevo cable submarino conectará al Perú directamente con Asia-Pacífico",
+  "status": "published",
+  "demo": true,
+  "subtitle": "El proyecto reduciría la latencia de las conexiones internacionales de datos del país",
+  "excerpt": "El nuevo cable submarino busca reducir la dependencia de rutas de datos que hoy transitan por otros países antes de llegar a los mercados asiáticos.",
+  "content": "Un consorcio internacional de operadores ha anunciado el estudio de factibilidad de un nuevo cable submarino de fibra óptica que conectaría al Perú de forma directa con mercados de Asia-Pacífico, aprovechando la posición del Puerto de Chancay como punto de aterrizaje.\n\nActualmente, buena parte del tráfico de datos internacional del Perú hacia Asia transita por rutas que pasan por otros países de la región, lo que incrementa la latencia de las conexiones y limita la competitividad del país como centro de datos regional.\n\nEl Ministerio de Transportes y Comunicaciones ha mostrado interés en el proyecto, señalando que una conexión submarina directa podría posicionar al Perú como un punto de interconexión relevante en la costa oeste de Sudamérica.\n\nOperadores de centros de datos y empresas tecnológicas han expresado respaldo a la iniciativa, destacando que menores latencias favorecerían la instalación de nueva infraestructura digital en el país.\n\nEl estudio de factibilidad del proyecto deberá concluir en los próximos doce meses, tras lo cual se definiría el cronograma de tendido del cable submarino.",
+  "category": "telecomunicaciones",
+  "date": "2026-08-25",
+  "author": "Sofía Vega",
+  "tags": [
+    "Fibra óptica",
+    "Internet",
+    "Infraestructura digital"
+  ],
+  "featured": false,
+  "image": "/images/cable-submarino-sudamerica-conexion-asia.svg",
+  "imageAlt": "Un nuevo cable submarino conectará al Perú directamente con Asia-Pacífico — imagen ilustrativa (contenido de demostración)"
+}

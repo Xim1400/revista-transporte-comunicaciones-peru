@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%" gradientTransform="rotate(111)">
+      <stop offset="0%" stop-color="#0B2447"/>
+      <stop offset="100%" stop-color="#1B4A8B"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#g)"/>
+  <rect x="120" y="0" width="2" height="675" fill="white" opacity="0.04" transform="skewX(-20)"/><rect x="300" y="0" width="2" height="675" fill="white" opacity="0.04" transform="skewX(-20)"/><rect x="480" y="0" width="2" height="675" fill="white" opacity="0.04" transform="skewX(-20)"/><rect x="660" y="0" width="2" height="675" fill="white" opacity="0.04" transform="skewX(-20)"/><rect x="840" y="0" width="2" height="675" fill="white" opacity="0.04" transform="skewX(-20)"/>
+  <rect x="0" y="615" width="1200" height="6" fill="#FFC72C"/>
+  <g transform="translate(540,255) scale(10)"><path d="M4 16h16M6 16v3M18 16v3M5 12l1.5-5A2 2 0 0 1 8.4 5.5h7.2A2 2 0 0 1 17.5 7L19 12v4H5v-4Z" fill="none" stroke="white" stroke-width="1.4" stroke-linejoin="round"/><circle cx="8" cy="19" r="1.2" fill="white"/><circle cx="16" cy="19" r="1.2" fill="white"/></g>
+</svg>

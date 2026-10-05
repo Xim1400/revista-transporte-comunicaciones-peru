@@ -1,0 +1,23 @@
+{
+  "name": "transytel-mcp",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Servidor MCP (Model Context Protocol) para gestionar el contenido de la revista TRANS&TEL.",
+  "type": "module",
+  "main": "server.ts",
+  "scripts": {
+    "start": "tsx server.ts",
+    "dev": "tsx watch server.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "dotenv": "^16.4.5",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.5.0"
+  }
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "slug": "transporte",
+    "name": "Transporte",
+    "description": "Transporte terrestre y ferroviario: carreteras, buses, trenes, movilidad urbana y logística de carga en el Perú.",
+    "builtin": true
+  },
+  {
+    "slug": "aeropuertos",
+    "name": "Aeropuertos",
+    "description": "Transporte aéreo, aeropuertos, aerolíneas y aviación civil y comercial en el Perú.",
+    "builtin": true
+  },
+  {
+    "slug": "puertos",
+    "name": "Puertos",
+    "description": "Transporte marítimo y fluvial, puertos, terminales portuarias y logística de comercio exterior.",
+    "builtin": true
+  },
+  {
+    "slug": "telecomunicaciones",
+    "name": "Telecomunicaciones",
+    "description": "5G, fibra óptica, internet, satélites, operadores, redes y conectividad en el Perú.",
+    "builtin": true
+  },
+  {
+    "slug": "infraestructura",
+    "name": "Infraestructura",
+    "description": "Obras públicas, infraestructura vial, ferroviaria, portuaria, aeroportuaria y de telecomunicaciones.",
+    "builtin": true
+  }
+]

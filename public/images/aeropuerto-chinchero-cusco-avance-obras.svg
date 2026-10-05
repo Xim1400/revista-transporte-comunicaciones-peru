@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%" gradientTransform="rotate(185)">
+      <stop offset="0%" stop-color="#0F3D6E"/>
+      <stop offset="100%" stop-color="#1868B0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#g)"/>
+  <rect x="200" y="0" width="2" height="675" fill="white" opacity="0.04" transform="skewX(-20)"/><rect x="380" y="0" width="2" height="675" fill="white" opacity="0.04" transform="skewX(-20)"/><rect x="560" y="0" width="2" height="675" fill="white" opacity="0.04" transform="skewX(-20)"/><rect x="740" y="0" width="2" height="675" fill="white" opacity="0.04" transform="skewX(-20)"/><rect x="920" y="0" width="2" height="675" fill="white" opacity="0.04" transform="skewX(-20)"/>
+  <rect x="0" y="615" width="1200" height="6" fill="#FFC72C"/>
+  <g transform="translate(540,255) scale(10)"><path d="M2.5 16.5 21 11l.5 2-8 3.3.5 4.2-2.3 1-1.2-4.6-5 1.6-.6-1.6 3.7-2.6-5-1.8Z" fill="white" stroke="white" stroke-width="0.4" stroke-linejoin="round"/></g>
+</svg>

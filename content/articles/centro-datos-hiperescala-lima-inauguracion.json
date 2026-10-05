@@ -1,0 +1,21 @@
+{
+  "id": "art-019",
+  "slug": "centro-datos-hiperescala-lima-inauguracion",
+  "title": "Inaugurado el primer centro de datos hiperescala del Perú en Lima",
+  "status": "published",
+  "demo": true,
+  "subtitle": "La instalación busca posicionar al país como nodo regional de servicios en la nube",
+  "excerpt": "El nuevo centro de datos hiperescala en Lima atenderá la creciente demanda de servicios en la nube e inteligencia artificial en el país.",
+  "content": "Un operador internacional de infraestructura digital ha inaugurado el primer centro de datos de categoría hiperescala construido en el Perú, ubicado en Lima, con capacidad para albergar miles de servidores dedicados a servicios en la nube.\n\nLa instalación busca reducir la dependencia de centros de datos ubicados en otros países de la región para alojar aplicaciones y servicios digitales utilizados por empresas y entidades públicas peruanas.\n\nEl Ministerio de Transportes y Comunicaciones destacó que contar con infraestructura de datos de este nivel es clave para atraer inversión en servicios de inteligencia artificial y computación en la nube al país.\n\nEl centro de datos se conecta directamente a la Red Dorsal Nacional de Fibra Óptica, lo que permitirá ofrecer baja latencia a empresas de regiones conectadas a la red troncal.\n\nEl proyecto contempla una segunda fase de ampliación en los próximos años, en línea con el crecimiento esperado de la demanda de servicios digitales en el país.",
+  "category": "infraestructura",
+  "date": "2026-08-30",
+  "author": "Carlos Iñarra",
+  "tags": [
+    "Centros de datos",
+    "Infraestructura digital",
+    "Lima"
+  ],
+  "featured": false,
+  "image": "/images/centro-datos-hiperescala-lima-inauguracion.svg",
+  "imageAlt": "Inaugurado el primer centro de datos hiperescala del Perú en Lima — imagen ilustrativa (contenido de demostración)"
+}
