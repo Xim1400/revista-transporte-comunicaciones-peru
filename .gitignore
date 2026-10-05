@@ -45,3 +45,9 @@ next-env.d.ts
 # mcp
 /mcp/node_modules
 /mcp/dist
+
+# certificados emitidos por certbot en el servidor (nunca en git)
+/nginx/certbot/www/*
+/nginx/certbot/conf/*
+!/nginx/certbot/www/.gitkeep
+!/nginx/certbot/conf/.gitkeep

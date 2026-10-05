@@ -44,5 +44,17 @@ services:
       - mcp
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx/certbot/www:/var/www/certbot:ro
+      - ./nginx/certbot/conf:/etc/letsencrypt:ro
     ports:
       - "80:80"
+      - "443:443"
+
+  # Emite/renueva certificados Let's Encrypt. No se ejecuta en segundo
+  # plano: se invoca puntualmente (ver sección HTTPS del README).
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - ./nginx/certbot/www:/var/www/certbot
+      - ./nginx/certbot/conf:/etc/letsencrypt
+    profiles: ["certbot"]

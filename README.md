@@ -126,11 +126,23 @@ docker compose up -d --build
 
 ## Nginx / dominio propio
 
-`nginx/nginx.conf` incluye un ejemplo de reverse proxy para Next.js (y opcionalmente el MCP) sin certificados ni secretos reales. Para producción:
+`nginx/nginx.conf` incluye un reverse proxy para Next.js (y opcionalmente el MCP) sin certificados ni secretos reales.
 
-1. Sustituye `server_name tu-dominio.example;` por tu dominio.
-2. Añade un bloque `server` en el puerto 443 con tus certificados TLS (p. ej. Let's Encrypt / certbot).
-3. Redirige el puerto 80 a 443.
+1. Apunta un registro DNS tipo `A` de tu dominio a la IP del servidor.
+2. Sustituye `server_name tu-dominio.example;` por tu dominio (hay dos ocurrencias: el bloque 80 activo y el bloque 443 comentado).
+3. `docker compose up -d` con solo HTTP (el bloque 443 sigue comentado) y emite el certificado:
+   ```bash
+   docker compose run --rm certbot certonly --webroot \
+     -w /var/www/certbot -d tu-dominio.com --email tu@email.com --agree-tos --no-eff-email
+   ```
+4. Descomenta el bloque `server { listen 443 ... }` al final de `nginx/nginx.conf` y cambia `location /` del bloque 80 por una redirección a HTTPS (instrucciones al final del propio archivo).
+5. `docker compose restart nginx`.
+
+La renovación automática (los certificados de Let's Encrypt caducan a los 90 días) se programa con un cron en el host:
+```bash
+# crontab -e
+0 3 * * * cd /ruta/al/proyecto && docker compose run --rm certbot renew --quiet && docker compose restart nginx
+```
 
 ## Variables de entorno
 
