@@ -14,8 +14,13 @@ services:
       - ./public/images:/app/public/images
     expose:
       - "3000"
+    # Solo accesible desde el propio servidor (127.0.0.1), nunca expuesto
+    # directamente a internet. Un reverse proxy (el Nginx incluido más
+    # abajo, o el Nginx/Apache del sistema si ya tienes otras webs en este
+    # servidor) es quien lo publica hacia afuera. WEB_PORT evita chocar con
+    # otros servicios que ya puedan estar usando el 3000 en este host.
     ports:
-      - "3000:3000"
+      - "127.0.0.1:${WEB_PORT:-3000}:3000"
 
   mcp:
     build:
@@ -33,9 +38,21 @@ services:
       - ./public/images:/app/public/images
     expose:
       - "8787"
+    # Igual que `web`: solo en localhost. MCP_HOST_PORT es el puerto en el
+    # host; el puerto interno del contenedor (MCP_PORT, arriba) no cambia.
     ports:
-      - "8787:8787"
+      - "127.0.0.1:${MCP_HOST_PORT:-8787}:8787"
 
+  # --- Nginx + certbot incluidos: SOLO para un servidor dedicado a este
+  # proyecto, donde nada más usa los puertos 80/443 todavía.
+  #
+  # Si el servidor ya tiene un Nginx/Apache del sistema sirviendo otras
+  # webs (lo habitual), NO actives este perfil: en su lugar, añade un
+  # nuevo server block al Nginx existente que apunte a
+  # 127.0.0.1:${WEB_PORT:-3000} (ver sección "Servidor compartido" del
+  # README). Así nunca se tocan los sitios que ya existen.
+  #
+  # Activar explícitamente con: docker compose --profile standalone-nginx up -d
   nginx:
     image: nginx:1.27-alpine
     restart: unless-stopped
@@ -49,12 +66,13 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    profiles: ["standalone-nginx"]
 
-  # Emite/renueva certificados Let's Encrypt. No se ejecuta en segundo
-  # plano: se invoca puntualmente (ver sección HTTPS del README).
+  # Emite/renueva certificados Let's Encrypt para el Nginx incluido arriba.
+  # Solo relevante junto al perfil standalone-nginx.
   certbot:
     image: certbot/certbot:latest
     volumes:
       - ./nginx/certbot/www:/var/www/certbot
       - ./nginx/certbot/conf:/etc/letsencrypt
-    profiles: ["certbot"]
+    profiles: ["standalone-nginx"]

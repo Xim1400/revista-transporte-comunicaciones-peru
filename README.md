@@ -110,33 +110,60 @@ npm run build
 
 ## Docker
 
-El proyecto se ejecuta con tres servicios: `web` (Next.js), `mcp` (servidor MCP en modo HTTP) y `nginx` (reverse proxy).
+El proyecto se ejecuta con dos servicios siempre activos — `web` (Next.js) y `mcp` (servidor MCP en modo HTTP), ambos publicados **solo en `127.0.0.1`** del host (nunca expuestos directamente a internet) — más un `nginx` + `certbot` **opcionales**, pensados únicamente para un servidor dedicado por completo a este proyecto.
 
 ```bash
 cp .env.example .env
 # Edita .env y define al menos MCP_API_KEY (openssl rand -hex 32)
+# Si el puerto 3000 u 8787 ya están en uso en este host, define también
+# WEB_PORT y MCP_HOST_PORT en .env con puertos libres.
 
 docker compose up -d --build
 ```
 
-- Frontend: http://localhost (vía Nginx) o http://localhost:3000 (directo)
-- MCP (HTTP, autenticado): http://localhost:8787/mcp o http://localhost/mcp
+- Frontend: `http://127.0.0.1:3000` (o el `WEB_PORT` que hayas definido) **desde el propio servidor**.
+- MCP (HTTP, autenticado): `http://127.0.0.1:8787/mcp` (o `MCP_HOST_PORT`), igualmente solo local.
 
 `content/` y `public/images/` se montan como volúmenes compartidos entre `web` y `mcp`: una noticia creada o publicada por el MCP aparece inmediatamente en la revista.
 
-## Nginx / dominio propio
+### Servidor dedicado (el Nginx incluido)
 
-`nginx/nginx.conf` incluye un reverse proxy para Next.js (y opcionalmente el MCP) sin certificados ni secretos reales.
+Si el servidor no tiene ya un Nginx/Apache del sistema sirviendo otras webs, puedes usar el Nginx + certbot incluidos activando su perfil:
 
-1. Apunta un registro DNS tipo `A` de tu dominio a la IP del servidor.
-2. Sustituye `server_name tu-dominio.example;` por tu dominio (hay dos ocurrencias: el bloque 80 activo y el bloque 443 comentado).
-3. `docker compose up -d` con solo HTTP (el bloque 443 sigue comentado) y emite el certificado:
-   ```bash
-   docker compose run --rm certbot certonly --webroot \
-     -w /var/www/certbot -d tu-dominio.com --email tu@email.com --agree-tos --no-eff-email
-   ```
-4. Descomenta el bloque `server { listen 443 ... }` al final de `nginx/nginx.conf` y cambia `location /` del bloque 80 por una redirección a HTTPS (instrucciones al final del propio archivo).
-5. `docker compose restart nginx`.
+```bash
+docker compose --profile standalone-nginx up -d --build
+```
+
+Esto sí publica los puertos 80/443. Para HTTPS: sustituye `server_name tu-dominio.example;` en `nginx/nginx.conf` por tu dominio, emite el certificado con `docker compose run --rm certbot certonly --webroot -w /var/www/certbot -d tu-dominio.com --email tu@email.com --agree-tos --no-eff-email`, descomenta el bloque `listen 443` al final del archivo y `docker compose restart nginx`.
+
+### Servidor compartido (ya tiene Nginx con otras webs) — recomendado
+
+**No** actives `standalone-nginx`: con `docker compose up -d` normal, `web` y `mcp` quedan escuchando solo en `127.0.0.1`. Añade un **archivo nuevo** al Nginx del sistema (sin tocar los sitios existentes) que apunte a ese puerto:
+
+```nginx
+# /etc/nginx/sites-available/trans-tel.conf
+server {
+    listen 80;
+    server_name tu-dominio.com;
+
+    location / {
+        proxy_pass http://127.0.0.1:3000;   # o el WEB_PORT que hayas usado
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+
+```bash
+ln -s /etc/nginx/sites-available/trans-tel.conf /etc/nginx/sites-enabled/
+nginx -t                    # valida TODA la config, incluidos los sitios existentes
+systemctl reload nginx      # recarga en caliente, sin cortar las otras webs
+```
+
+Para HTTPS en este escenario, usa el certbot del sistema (`certbot --nginx -d tu-dominio.com`), que solo modifica este archivo nuevo.
 
 La renovación automática (los certificados de Let's Encrypt caducan a los 90 días) se programa con un cron en el host:
 ```bash
