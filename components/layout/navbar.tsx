@@ -44,7 +44,7 @@ export function Navbar() {
       )}
     >
       <div className="h-[3px] w-full bg-brand-yellow" />
-      <nav className="container-editorial flex h-16 items-center justify-between gap-4">
+      <nav className="container-editorial flex h-20 items-center justify-between gap-4">
         <BrandMark />
 
         <ul className="hidden items-center gap-1 lg:flex">

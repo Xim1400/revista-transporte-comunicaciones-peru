@@ -11,8 +11,8 @@
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-serif-editorial);
 
-  /* Identidad de marca TRANS&TEL */
-  --color-brand-navy: #0a1f3d;
+  /* Identidad de marca TRANS&TEL (navy tomado directamente del logo) */
+  --color-brand-navy: #0c1c2c;
   --color-brand-blue: #15509e;
   --color-brand-blue-light: #e8f0fb;
   --color-brand-yellow: #ffc72c;
@@ -64,14 +64,14 @@
   --card-foreground: #161b22;
   --popover: #ffffff;
   --popover-foreground: #161b22;
-  --primary: #0a1f3d;
+  --primary: #0c1c2c;
   --primary-foreground: #ffffff;
   --secondary: #f7f8fa;
-  --secondary-foreground: #0a1f3d;
+  --secondary-foreground: #0c1c2c;
   --muted: #f2f4f7;
   --muted-foreground: #5b6472;
   --accent: #ffc72c;
-  --accent-foreground: #0a1f3d;
+  --accent-foreground: #0c1c2c;
   --destructive: oklch(0.577 0.245 27.325);
   --border: #e6e8ec;
   --input: #e6e8ec;
