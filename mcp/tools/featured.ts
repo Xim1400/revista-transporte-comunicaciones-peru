@@ -1,6 +1,7 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { contentRepository } from "../../lib/content/repository.js";
 import { SetFeaturedSchema } from "../schemas/article.js";
+import { triggerRevalidate } from "../services/revalidate.js";
 
 function text(obj: unknown) {
   return {
@@ -41,6 +42,7 @@ export function registerFeaturedTools(server: McpServer) {
     async ({ slug }) => {
       const updated = contentRepository.setFeatured(slug, true);
       if (!updated) return errorResult(`No existe ningún artículo con slug "${slug}".`);
+      await triggerRevalidate(["/"]);
       return text({ message: `Artículo "${slug}" marcado como destacado.`, article: updated });
     }
   );
@@ -55,6 +57,7 @@ export function registerFeaturedTools(server: McpServer) {
     async ({ slug }) => {
       const updated = contentRepository.setFeatured(slug, false);
       if (!updated) return errorResult(`No existe ningún artículo con slug "${slug}".`);
+      await triggerRevalidate(["/"]);
       return text({ message: `Artículo "${slug}" ya no está destacado.`, article: updated });
     }
   );

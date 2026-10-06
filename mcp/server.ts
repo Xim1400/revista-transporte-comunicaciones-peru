@@ -17,7 +17,6 @@ import "dotenv/config";
 import path from "node:path";
 import http from "node:http";
 import { fileURLToPath } from "node:url";
-import { randomUUID } from "node:crypto";
 
 // Resuelve content/ y public/images a partir de la ubicación de este
 // módulo (no del cwd del proceso), para que el MCP funcione igual
@@ -110,9 +109,16 @@ async function startHttp() {
       // Modo stateless: una instancia de servidor/transporte por petición.
       // Evita mantener sesiones en memoria y simplifica el despliegue
       // detrás de un balanceador (ver nginx/ en la raíz del proyecto).
+      // `sessionIdGenerator: undefined` es el modo "stateless" documentado
+      // por el SDK: cada petición se trata de forma autocontenida, sin
+      // esperar continuidad de sesión entre peticiones (que aquí no existe,
+      // porque cada una recibe una instancia de servidor nueva). Usar un
+      // generador de IDs aquí rompe el handshake de cualquier cliente MCP
+      // real, que tras `initialize` envía `notifications/initialized` en
+      // una segunda petición HTTP separada.
       const server = buildServer();
       const transport = new StreamableHTTPServerTransport({
-        sessionIdGenerator: () => randomUUID(),
+        sessionIdGenerator: undefined,
       });
       res.on("close", () => {
         transport.close();

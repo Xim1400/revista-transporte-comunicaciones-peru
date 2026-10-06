@@ -11,6 +11,12 @@ import { RelatedArticles } from "@/components/article/related-articles";
 import { formatDate } from "@/lib/format";
 import { SITE } from "@/lib/site";
 
+// Red de seguridad: el MCP invalida la página de un artículo al instante
+// tras publicar/actualizar/despublicar (ver app/api/revalidate/route.ts).
+// Un slug nuevo que aún no exista como página estática se renderiza al
+// vuelo en la primera visita (dynamicParams, por defecto true).
+export const revalidate = 60;
+
 export function generateStaticParams() {
   return contentRepository
     .findAll({ status: "published" })

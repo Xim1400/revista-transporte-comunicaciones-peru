@@ -182,8 +182,28 @@ Plantillas: [`.env.example`](./.env.example) (app) y [`mcp/.env.example`](./mcp/
 | `MCP_PORT` | mcp | Puerto del servidor HTTP del MCP. |
 | `MCP_API_KEY` | mcp | Clave requerida en `Authorization: Bearer <clave>` cuando `MCP_TRANSPORT=http`. **Obligatoria** en ese modo; sin ella el servidor rechaza todas las peticiones. |
 | `MCP_ALLOWED_ORIGINS` | mcp | Orígenes permitidos por CORS, separados por coma. |
+| `MCP_TRUSTED_PROXY_IPS` | mcp | (Opcional) IPs de proxy de confianza para el rate limit por IP. Por defecto ya cubre loopback y el rango privado típico de redes Docker (`172.16.0.0/12`); solo hace falta tocarlo en topologías de red poco habituales. |
+| `REVALIDATE_SECRET` | app/mcp | Mismo valor en ambos lados. Permite que el MCP avise a la web para refrescar la portada/artículo/sitemap al instante tras publicar. Sin ella, el contenido nuevo tarda hasta 60s en aparecer (respaldo por tiempo, ver [Frescura del contenido](#frescura-del-contenido-isr)). |
+| `INTERNAL_WEB_URL` | mcp | URL interna donde el MCP llama a la web para revalidar. En `docker-compose.yml` ya está fijada a `http://web:3000` (nombre del servicio en la red interna); en local, por defecto `http://localhost:3000`. |
 | `CONTENT_ARTICLES_DIR` | app/mcp | (Opcional) ruta absoluta alternativa a `content/articles`. |
 | `PUBLIC_IMAGES_DIR` | app/mcp | (Opcional) ruta absoluta alternativa a `public/images`. |
+
+## Frescura del contenido (ISR)
+
+El contenido vive en archivos (`content/articles/*.json`), pero varias páginas (home, artículo, sitemap) se renderizan de forma estática para que carguen rápido. Sin más, una noticia publicada por el MCP no aparecería en portada hasta el siguiente `npm run build`.
+
+Para evitar eso, el MCP llama a `POST /api/revalidate` (protegido por `REVALIDATE_SECRET`) justo después de `publish_article`, `unpublish_article`, `update_article`, `delete_article`, `set_featured_article` y `remove_featured_article`, indicando qué rutas invalidar. El resultado: el cambio se ve en la revista **al instante**, sin rebuild.
+
+Como red de seguridad adicional (por si `REVALIDATE_SECRET` no está configurado, o la llamada falla por lo que sea), esas mismas páginas también tienen un `revalidate` por tiempo:
+
+| Página | Respaldo por tiempo | Mecanismo principal |
+|---|---|---|
+| `/` (home) | 60s | Revalidación on-demand desde el MCP |
+| `/noticias/[slug]` | 60s | Revalidación on-demand + render dinámico para slugs nuevos |
+| `/sitemap.xml` | 1h | Revalidación on-demand |
+| `/[categoria]`, `/buscar` | — | Ya son 100% dinámicas (leen `searchParams`), siempre frescas |
+
+**Cómo comprobarlo tú mismo** (con `docker compose up -d` y `REVALIDATE_SECRET` configurado en `.env`): publica o destaca un artículo por MCP y recarga la home antes de que pasen 60 segundos — el cambio ya debería estar ahí. Si no, revisa `docker compose logs mcp` en busca de `[MCP] No se pudo avisar al sitio para revalidar`.
 
 ## Contenido y datos de demostración
 
@@ -223,7 +243,7 @@ El MCP vive en [`/mcp`](./mcp) como paquete Node independiente (propio `package.
 | `get_article_statistics` | Totales por estado, por categoría y destacados. |
 | `upload_image` | Sube una imagen (base64) y devuelve su URL pública. |
 
-> **Nota sobre `create_category`:** las 6 secciones principales de la revista (transporte, telecomunicaciones, tecnología, infraestructura, economía, opinión) tienen ruta propia en la UI (`/app/<categoria>`). Una categoría creada desde el MCP queda disponible para clasificar y buscar artículos, pero no genera automáticamente una nueva sección en la navegación.
+> **Nota sobre `create_category`:** las 5 secciones principales de la revista (transporte, aeropuertos, puertos, telecomunicaciones, infraestructura) tienen ruta propia en la UI (`/app/<categoria>`). Una categoría creada desde el MCP queda disponible para clasificar y buscar artículos, pero no genera automáticamente una nueva sección en la navegación.
 
 ### Flujo editorial
 
@@ -232,12 +252,14 @@ IA → create_article → draft → (revisión humana) → publish_article → v
 IA → set_featured_article → aparece en el carrusel de destacados de la home
 ```
 
+Tras `publish_article`/`update_article`/`set_featured_article` (o sus inversos), el MCP notifica al frontend para que invalide la caché de las páginas afectadas (home, categoría, artículo, sitemap) — ver [Frescura del contenido](#frescura-del-contenido-isr) más abajo para el detalle técnico y cómo probarlo.
+
 Ningún contenido se publica automáticamente: `create_article` siempre deja el artículo en `draft`.
 
 ### Seguridad
 
 - **Transporte `stdio`** (por defecto): sin superficie de red; pensado para clientes MCP locales (ej. Claude Desktop, un CLI MCP). No requiere API key.
-- **Transporte `http`**: requiere `MCP_API_KEY` (falla cerrado si no está definida), valida `Authorization: Bearer <clave>`, aplica **rate limiting** por IP (60 req/min) y **CORS** restringido a `MCP_ALLOWED_ORIGINS`.
+- **Transporte `http`**: requiere `MCP_API_KEY` (falla cerrado si no está definida), valida `Authorization: Bearer <clave>` con comparación en tiempo constante (`crypto.timingSafeEqual`, evita filtrar la clave por timing), aplica **rate limiting** por IP (60 req/min, calculado solo a partir de proxies de confianza — ver `MCP_TRUSTED_PROXY_IPS` — para que un cliente no pueda saltárselo falsificando `X-Forwarded-For`) y **CORS** restringido a `MCP_ALLOWED_ORIGINS`.
 - Todas las tools validan su entrada con **Zod** antes de tocar el repositorio (`mcp/schemas/article.ts`): títulos, slugs, categorías, imágenes, tags y fechas se validan explícitamente; nunca se confía en los datos tal cual los propone la IA.
 - Las tools están limitadas a operaciones concretas de contenido. **No existe** ninguna herramienta de shell, SQL o escritura arbitraria de archivos.
 

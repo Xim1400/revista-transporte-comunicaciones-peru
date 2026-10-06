@@ -4,6 +4,7 @@ import { contentRepository } from "../../lib/content/repository.js";
 import type { Article } from "../../lib/types.js";
 import { categoryRepository } from "../services/categoryRepository.js";
 import { slugify } from "../services/slug.js";
+import { triggerRevalidate, articlePaths } from "../services/revalidate.js";
 import {
   CreateArticleSchema,
   UpdateArticleSchema,
@@ -135,11 +136,19 @@ export function registerArticleTools(server: McpServer) {
     async ({ slug, ...patch }) => {
       try {
         if (patch.category) assertCategoryExists(patch.category);
+        const previous = contentRepository.findBySlug(slug);
         const cleanPatch = Object.fromEntries(
           Object.entries(patch).filter(([, v]) => v !== undefined)
         );
         const updated = contentRepository.update(slug, cleanPatch as Partial<Article>);
         if (!updated) return errorResult(`No existe ningún artículo con slug "${slug}".`);
+        const paths = articlePaths(updated);
+        // Si cambió de categoría, el listado de la categoría anterior
+        // también deja de incluir este artículo.
+        if (previous && previous.category !== updated.category) {
+          paths.push(`/${previous.category}`);
+        }
+        await triggerRevalidate(paths);
         return text({ message: "Artículo actualizado.", article: updated });
       } catch (err) {
         return errorResult((err as Error).message);
@@ -155,8 +164,10 @@ export function registerArticleTools(server: McpServer) {
       inputSchema: SlugOnlySchema,
     },
     async ({ slug }) => {
+      const existing = contentRepository.findBySlug(slug);
       const deleted = contentRepository.delete(slug);
       if (!deleted) return errorResult(`No existe ningún artículo con slug "${slug}".`);
+      if (existing) await triggerRevalidate(articlePaths(existing));
       return text({ message: `Artículo "${slug}" eliminado.` });
     }
   );
@@ -172,6 +183,7 @@ export function registerArticleTools(server: McpServer) {
     async ({ slug }) => {
       const updated = contentRepository.setStatus(slug, "published");
       if (!updated) return errorResult(`No existe ningún artículo con slug "${slug}".`);
+      await triggerRevalidate(articlePaths(updated));
       return text({ message: `Artículo "${slug}" publicado.`, article: updated });
     }
   );
@@ -186,6 +198,7 @@ export function registerArticleTools(server: McpServer) {
     async ({ slug }) => {
       const updated = contentRepository.setStatus(slug, "draft");
       if (!updated) return errorResult(`No existe ningún artículo con slug "${slug}".`);
+      await triggerRevalidate(articlePaths(updated));
       return text({ message: `Artículo "${slug}" despublicado (vuelve a draft).`, article: updated });
     }
   );

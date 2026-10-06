@@ -7,6 +7,11 @@ import { NewsletterCta } from "@/components/home/newsletter-cta";
 import { CATEGORIES } from "@/lib/types";
 import { SITE } from "@/lib/site";
 
+// Red de seguridad: el MCP invalida esta página al instante tras publicar
+// (ver app/api/revalidate/route.ts). Si esa notificación falla o no está
+// configurada, como mucho queda desactualizada 60s.
+export const revalidate = 60;
+
 export const metadata: Metadata = {
   title: `${SITE.name} — ${SITE.tagline}`,
   description: SITE.description,

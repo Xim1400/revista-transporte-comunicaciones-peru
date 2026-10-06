@@ -7,6 +7,11 @@ services:
     environment:
       - NODE_ENV=production
       - NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
+      # Secreto compartido con el MCP para invalidar la caché al instante
+      # tras publicar/editar (ver app/api/revalidate/route.ts). Si no se
+      # define, esa ruta devuelve 503 y el sitio se apoya solo en el
+      # respaldo por tiempo (60s) de cada página.
+      - REVALIDATE_SECRET=${REVALIDATE_SECRET:-}
     volumes:
       # Contenido compartido con el MCP: las noticias que la IA crea o
       # publica vía MCP se reflejan inmediatamente en la revista.
@@ -33,6 +38,10 @@ services:
       - MCP_PORT=8787
       - MCP_API_KEY=${MCP_API_KEY:?Define MCP_API_KEY en tu archivo .env}
       - MCP_ALLOWED_ORIGINS=${MCP_ALLOWED_ORIGINS:-http://localhost:3000}
+      - REVALIDATE_SECRET=${REVALIDATE_SECRET:-}
+      # Dentro de la red de docker-compose, `web` es el nombre del
+      # servicio: NO uses aquí el puerto publicado en el host (WEB_PORT).
+      - INTERNAL_WEB_URL=http://web:3000
     volumes:
       - ./content:/app/content
       - ./public/images:/app/public/images

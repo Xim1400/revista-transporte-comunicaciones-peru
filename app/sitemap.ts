@@ -3,6 +3,10 @@ import { contentRepository } from "@/lib/content/repository";
 import { CATEGORIES } from "@/lib/types";
 import { SITE } from "@/lib/site";
 
+// El sitemap no necesita frescura al segundo; el MCP lo invalida igual
+// tras publicar, esto es solo el respaldo.
+export const revalidate = 3600;
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: SITE.url, changeFrequency: "hourly", priority: 1 },
