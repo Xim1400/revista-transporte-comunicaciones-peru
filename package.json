@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "plesk:build": "next build",
+    "plesk:build": "next build --webpack",
     "plesk:start": "node server-plesk.cjs",
     "lint": "eslint",
     "test": "vitest run"
