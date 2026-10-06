@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Menu, Search, X } from "lucide-react";
-import { Logo } from "@/components/layout/logo";
+import { BrandMark } from "@/components/layout/brand-mark";
 import { NAV_LINKS } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import {
@@ -45,7 +45,7 @@ export function Navbar() {
     >
       <div className="h-[3px] w-full bg-brand-yellow" />
       <nav className="container-editorial flex h-16 items-center justify-between gap-4">
-        <Logo variant="light" />
+        <BrandMark />
 
         <ul className="hidden items-center gap-1 lg:flex">
           {NAV_LINKS.map((link) => {
@@ -92,11 +92,17 @@ export function Navbar() {
             >
               <Menu className="size-5" />
             </SheetTrigger>
-            <SheetContent side="right" className="w-72">
-              <SheetHeader>
+            <SheetContent side="right" className="w-72" showCloseButton={false}>
+              <SheetHeader className="relative bg-brand-navy">
                 <SheetTitle>
-                  <Logo variant="dark" />
+                  <BrandMark />
                 </SheetTitle>
+                <SheetClose
+                  aria-label="Cerrar menú"
+                  className="absolute top-3 right-3 rounded-full p-1.5 text-white/80 transition-colors hover:bg-white/10 hover:text-white"
+                >
+                  <X className="size-5" />
+                </SheetClose>
               </SheetHeader>
               <ul className="flex flex-col gap-1 px-4">
                 {NAV_LINKS.map((link) => (
