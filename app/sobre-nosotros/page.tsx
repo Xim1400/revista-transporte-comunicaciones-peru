@@ -13,14 +13,17 @@ export default function AboutPage() {
       <h1 className="mt-2 font-heading text-4xl font-bold tracking-tight">
         Sobre {SITE.name}
       </h1>
+      <p className="mt-1 text-sm font-medium text-muted-foreground">
+        {SITE.legalName}
+      </p>
       <div className="mt-6 space-y-4 text-foreground/80">
         <p>
-          {SITE.name} es una revista digital especializada en transporte y
-          comunicaciones del Perú: transporte terrestre y ferroviario,
-          aeropuertos, puertos, telecomunicaciones e infraestructura.
-          Cubrimos los proyectos, las obras y las decisiones regulatorias
-          que están transformando la forma en que el país se mueve y se
-          conecta.
+          {SITE.name} ({SITE.legalName}) es una revista digital
+          especializada en transporte y comunicaciones del Perú: transporte
+          terrestre y ferroviario, aeropuertos, puertos, telecomunicaciones
+          e infraestructura. Cubrimos los proyectos, las obras y las
+          decisiones regulatorias que están transformando la forma en que
+          el país se mueve y se conecta.
         </p>
         <p>
           Nuestro equipo editorial combina periodismo especializado con

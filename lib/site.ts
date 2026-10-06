@@ -5,6 +5,8 @@
  */
 export const SITE = {
   name: "TRANS&TEL",
+  /** Nombre completo de la publicación (el que lleva el logo). */
+  legalName: "Revista Peruana de Transportes y Comunicaciones",
   tagline: "Revista de Transporte y Comunicaciones del Perú",
   description:
     "Revista digital especializada en transporte y comunicaciones del Perú: transporte terrestre, aéreo y marítimo, telecomunicaciones e infraestructura.",

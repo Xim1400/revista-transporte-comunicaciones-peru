@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Logo } from "@/components/layout/logo";
+import { BrandMark } from "@/components/layout/brand-mark";
 import { NAV_LINKS, SITE } from "@/lib/site";
 
 /**
@@ -32,12 +32,13 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-brand-navy text-white">
+    <footer className="border-t border-white/10 bg-brand-navy text-white">
       <div className="container-editorial grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-4">
         <div className="sm:col-span-2 lg:col-span-1">
-          <Logo variant="light" />
-          <p className="mt-3 max-w-xs text-sm text-white/70">
-            {SITE.tagline}
+          <BrandMark className="h-10" />
+          <p className="mt-4 max-w-xs text-sm text-white/70">
+            {SITE.legalName}: noticias y análisis de transporte terrestre,
+            aéreo, marítimo, telecomunicaciones e infraestructura del Perú.
           </p>
           <div className="mt-5 flex items-center gap-3">
             <SocialLink href={SITE.social.twitter} label="Twitter / X">
@@ -78,7 +79,8 @@ export function Footer() {
       <div className="border-t border-white/10">
         <div className="container-editorial flex flex-col items-center justify-between gap-2 py-5 text-xs text-primary-foreground/60 sm:flex-row">
           <p>
-            © {year} {SITE.name}. Todos los derechos reservados.
+            © {year} {SITE.legalName} ({SITE.name}). Todos los derechos
+            reservados.
           </p>
           <p>Contenido de demostración con fines editoriales e ilustrativos.</p>
         </div>
