@@ -1,6 +1,7 @@
 import type { Article } from "@/lib/types";
 import { HorizontalNewsCard } from "@/components/news/horizontal-news-card";
 import { CompactNewsCard } from "@/components/news/compact-news-card";
+import { Reveal } from "@/components/ui/reveal";
 
 export function LatestNews({
   main,
@@ -10,8 +11,8 @@ export function LatestNews({
   sidebar: Article[];
 }) {
   return (
-    <section className="container-editorial py-12">
-      <div className="mb-6 border-b border-border pb-4">
+    <section className="container-editorial py-10">
+      <div className="mb-6 border-b border-border pb-3">
         <p className="kicker">Al minuto</p>
         <h2 className="mt-1 font-heading text-2xl font-bold tracking-tight">
           Últimas noticias
@@ -20,8 +21,10 @@ export function LatestNews({
 
       <div className="grid gap-10 lg:grid-cols-3">
         <div className="lg:col-span-2">
-          {main.map((article) => (
-            <HorizontalNewsCard key={article.slug} article={article} />
+          {main.map((article, i) => (
+            <Reveal key={article.slug} delay={i * 0.06}>
+              <HorizontalNewsCard article={article} />
+            </Reveal>
           ))}
         </div>
 

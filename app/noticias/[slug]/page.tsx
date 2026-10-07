@@ -8,6 +8,7 @@ import { CATEGORY_INFO } from "@/lib/types";
 import { Breadcrumb } from "@/components/article/breadcrumb";
 import { ShareButtons } from "@/components/article/share-buttons";
 import { RelatedArticles } from "@/components/article/related-articles";
+import { ReadingProgress } from "@/components/article/reading-progress";
 import { formatDate } from "@/lib/format";
 import { SITE } from "@/lib/site";
 
@@ -97,16 +98,18 @@ export default async function ArticlePage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <header className="container-editorial max-w-3xl py-8">
+      <ReadingProgress />
+
+      <header className="container-editorial max-w-3xl py-7">
         <Breadcrumb category={article.category} title={article.title} />
-        <p className="kicker mt-4">{info.name}</p>
-        <h1 className="mt-2 font-heading text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
+        <p className="kicker mt-3">{info.name}</p>
+        <h1 className="mt-2 font-heading text-3xl font-bold leading-[1.15] tracking-tight sm:text-4xl">
           {article.title}
         </h1>
         {article.subtitle && (
           <p className="mt-3 text-lg text-muted-foreground">{article.subtitle}</p>
         )}
-        <div className="mt-5 flex flex-wrap items-center gap-3 border-t border-border pt-4 text-sm text-muted-foreground">
+        <div className="mt-4 flex flex-wrap items-center gap-3 border-t border-border pt-4 text-sm text-muted-foreground">
           <span className="font-medium text-foreground/80">{article.author}</span>
           <span aria-hidden>·</span>
           <time dateTime={article.date}>{formatDate(article.date)}</time>
@@ -131,10 +134,19 @@ export default async function ArticlePage({
         </div>
       </div>
 
-      <div className="container-editorial max-w-3xl py-10">
-        <div className="prose-editorial space-y-5 text-[17px] leading-relaxed text-foreground/90">
+      <div className="container-editorial max-w-3xl py-9">
+        <div className="prose-editorial space-y-5 text-[17px] leading-[1.75] text-foreground/90">
           {paragraphs.map((paragraph, i) => (
-            <p key={i}>{paragraph}</p>
+            <p
+              key={i}
+              className={
+                i === 0
+                  ? "first-letter:float-left first-letter:mr-2 first-letter:mt-1 first-letter:font-heading first-letter:text-6xl first-letter:font-bold first-letter:leading-[0.85] first-letter:text-brand-navy"
+                  : undefined
+              }
+            >
+              {paragraph}
+            </p>
           ))}
         </div>
 
@@ -171,7 +183,7 @@ export default async function ArticlePage({
         </div>
       </div>
 
-      <div className="container-editorial max-w-5xl py-6 pb-16">
+      <div className="container-editorial max-w-5xl py-6 pb-14">
         <RelatedArticles articles={related} />
       </div>
     </article>

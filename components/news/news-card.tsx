@@ -7,10 +7,10 @@ import { formatDate } from "@/lib/format";
 /** Tarjeta estándar de noticia: imagen + categoría + título + extracto. */
 export function NewsCard({ article }: { article: Article }) {
   return (
-    <article className="group flex flex-col">
+    <article className="group flex flex-col transition-transform duration-300 hover:-translate-y-1">
       <Link
         href={`/noticias/${article.slug}`}
-        className="relative mb-4 block aspect-[16/10] overflow-hidden bg-muted"
+        className="relative mb-4 block aspect-[16/10] overflow-hidden bg-muted shadow-sm transition-shadow duration-300 group-hover:shadow-lg"
       >
         <Image
           src={article.image}
@@ -19,6 +19,7 @@ export function NewsCard({ article }: { article: Article }) {
           className="object-cover transition-transform duration-500 group-hover:scale-105"
           sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
         />
+        <span className="absolute bottom-0 left-0 h-[3px] w-0 bg-brand-yellow transition-all duration-300 group-hover:w-full" />
       </Link>
       <div className="flex items-center justify-between">
         <CategoryBadge category={article.category} />

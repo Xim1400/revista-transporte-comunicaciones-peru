@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function AdvertisingPage() {
   return (
-    <div className="container-editorial max-w-2xl py-16">
+    <div className="container-editorial max-w-2xl py-12">
       <p className="kicker">Publicidad</p>
       <h1 className="mt-2 font-heading text-4xl font-bold tracking-tight">
         Anúnciate en {SITE.name}

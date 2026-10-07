@@ -35,11 +35,12 @@ export default function HomePage() {
 
       <LatestNews main={rest.slice(0, 4)} sidebar={rest.slice(4, 9)} />
 
-      <div className="divide-y divide-border border-t border-border">
-        {CATEGORIES.map((category) => (
+      <div className="border-t border-border">
+        {CATEGORIES.map((category, i) => (
           <CategorySection
             key={category}
             category={category}
+            tinted={i % 2 === 1}
             articles={articleService.getArticlesByCategory(category, 1, 3).items}
           />
         ))}

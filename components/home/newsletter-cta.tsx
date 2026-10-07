@@ -9,7 +9,7 @@ export function NewsletterCta() {
 
   return (
     <section className="bg-brand-navy">
-      <div className="container-editorial flex flex-col items-center gap-6 py-14 text-center text-white sm:flex-row sm:justify-between sm:text-left">
+      <div className="container-editorial flex flex-col items-center gap-6 py-11 text-center text-white sm:flex-row sm:justify-between sm:text-left">
         <div>
           <div className="mx-auto flex size-10 items-center justify-center bg-brand-yellow text-primary sm:mx-0">
             <Mail className="size-5" />

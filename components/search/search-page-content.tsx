@@ -36,8 +36,8 @@ export function SearchPageContent({
   }
 
   return (
-    <div className="container-editorial py-10">
-      <header className="border-b border-border pb-6">
+    <div className="container-editorial py-8">
+      <header className="border-b border-border pb-5">
         <p className="kicker">Buscador</p>
         <h1 className="mt-1 font-heading text-3xl font-bold tracking-tight">
           Buscar noticias
@@ -72,7 +72,7 @@ export function SearchPageContent({
             type="button"
             onClick={() => updateParams({ categoria: null })}
             className={cn(
-              "px-3 py-1.5 text-xs font-semibold uppercase tracking-wide",
+              "px-3 py-1.5 text-xs font-semibold uppercase tracking-wide transition-colors",
               !activeCategory
                 ? "bg-primary text-primary-foreground"
                 : "bg-muted text-foreground/70 hover:bg-brand-blue-light"
@@ -86,7 +86,7 @@ export function SearchPageContent({
               type="button"
               onClick={() => updateParams({ categoria: c })}
               className={cn(
-                "px-3 py-1.5 text-xs font-semibold uppercase tracking-wide",
+                "px-3 py-1.5 text-xs font-semibold uppercase tracking-wide transition-colors",
                 activeCategory === c
                   ? "bg-primary text-primary-foreground"
                   : "bg-muted text-foreground/70 hover:bg-brand-blue-light"
@@ -98,7 +98,7 @@ export function SearchPageContent({
         </div>
       </header>
 
-      <p className="py-6 text-sm text-muted-foreground">
+      <p className="py-5 text-sm text-muted-foreground">
         {filtered.length}{" "}
         {filtered.length === 1 ? "resultado encontrado" : "resultados encontrados"}
       </p>

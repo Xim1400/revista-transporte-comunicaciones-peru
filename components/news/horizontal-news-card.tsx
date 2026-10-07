@@ -7,7 +7,7 @@ import { formatDate } from "@/lib/format";
 /** Tarjeta horizontal: imagen a un lado, texto al otro. Usada en grids de categoría. */
 export function HorizontalNewsCard({ article }: { article: Article }) {
   return (
-    <article className="group grid grid-cols-5 gap-4 border-b border-border py-5 sm:gap-6">
+    <article className="group grid grid-cols-5 gap-4 border-b border-border py-5 transition-colors duration-200 hover:bg-brand-gray-50 sm:gap-6">
       <Link
         href={`/noticias/${article.slug}`}
         className="relative col-span-2 aspect-[4/3] overflow-hidden bg-muted sm:col-span-1"
