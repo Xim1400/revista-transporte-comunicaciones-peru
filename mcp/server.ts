@@ -72,7 +72,10 @@ async function startStdio() {
 }
 
 async function startHttp() {
-  const port = Number(process.env.MCP_PORT ?? 8787);
+  // PORT tiene prioridad: es la variable que asignan automáticamente
+  // plataformas como Plesk/Passenger. MCP_PORT sigue siendo lo que se usa
+  // explícitamente en Docker (ver docker-compose.yml).
+  const port = Number(process.env.PORT ?? process.env.MCP_PORT ?? 8787);
 
   if (!process.env.MCP_API_KEY) {
     console.error(
