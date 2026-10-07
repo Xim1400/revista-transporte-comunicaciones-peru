@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CATEGORY_INFO, type CategorySlug } from "@/lib/types";
+import { CategoryIcon } from "@/components/news/category-icon";
 import { cn } from "@/lib/utils";
 
 export function CategoryBadge({
@@ -21,12 +22,7 @@ export function CategoryBadge({
         className
       )}
     >
-      <span
-        className={cn(
-          "inline-block h-2 w-2",
-          variant === "default" ? "bg-brand-yellow" : "bg-brand-yellow"
-        )}
-      />
+      <CategoryIcon category={category} className="size-3.5 text-brand-yellow" />
       {info.name}
     </Link>
   );

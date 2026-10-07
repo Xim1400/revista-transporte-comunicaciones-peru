@@ -3,6 +3,7 @@ import { articleService } from "@/lib/articles/articleService";
 import { CATEGORY_INFO, type CategorySlug } from "@/lib/types";
 import { NewsGrid } from "@/components/news/news-grid";
 import { CategoryBadge } from "@/components/news/category-badge";
+import { CategoryIcon } from "@/components/news/category-icon";
 import { Reveal } from "@/components/ui/reveal";
 import { formatDate } from "@/lib/format";
 
@@ -23,7 +24,8 @@ export function CategoryPageContent({
         <span className="absolute inset-y-0 left-0 w-1.5 bg-brand-yellow" aria-hidden />
         <div className="container-editorial py-8">
           <p className="kicker">Sección</p>
-          <h1 className="mt-1 font-heading text-4xl font-bold tracking-tight">
+          <h1 className="mt-1 flex items-center gap-3 font-heading text-4xl font-bold tracking-tight">
+            <CategoryIcon category={category} className="size-8 text-brand-blue" />
             {info.name}
           </h1>
           <p className="mt-2 max-w-2xl text-muted-foreground">

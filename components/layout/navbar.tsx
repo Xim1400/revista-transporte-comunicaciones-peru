@@ -5,7 +5,9 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Menu, Search, X } from "lucide-react";
 import { BrandMark } from "@/components/layout/brand-mark";
+import { CategoryIcon } from "@/components/news/category-icon";
 import { NAV_LINKS } from "@/lib/site";
+import { categoryService } from "@/lib/categories/categories";
 import { cn } from "@/lib/utils";
 import {
   Sheet,
@@ -49,6 +51,8 @@ export function Navbar() {
 
         <ul className="hidden items-center gap-1 lg:flex">
           {NAV_LINKS.map((link) => {
+            const slug = link.href.slice(1);
+            const category = categoryService.isValidCategory(slug) ? slug : null;
             const active =
               link.href === "/"
                 ? pathname === "/"
@@ -58,10 +62,19 @@ export function Navbar() {
                 <Link
                   href={link.href}
                   className={cn(
-                    "relative px-3 py-2 text-sm font-medium text-white/80 transition-colors hover:text-white",
+                    "group relative flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-white/80 transition-colors hover:text-white",
                     active && "text-white"
                   )}
                 >
+                  {category && (
+                    <CategoryIcon
+                      category={category}
+                      className={cn(
+                        "size-3.5 text-white/50 transition-colors group-hover:text-brand-yellow",
+                        active && "text-brand-yellow"
+                      )}
+                    />
+                  )}
                   {link.label}
                   <span
                     className={cn(
@@ -105,20 +118,27 @@ export function Navbar() {
                 </SheetClose>
               </SheetHeader>
               <ul className="flex flex-col gap-1 px-4">
-                {NAV_LINKS.map((link) => (
-                  <li key={link.href}>
-                    <SheetClose
-                      render={
-                        <Link
-                          href={link.href}
-                          className="block rounded-md px-3 py-2.5 text-base font-medium text-foreground/90 hover:bg-muted hover:text-primary"
-                        />
-                      }
-                    >
-                      {link.label}
-                    </SheetClose>
-                  </li>
-                ))}
+                {NAV_LINKS.map((link) => {
+                  const slug = link.href.slice(1);
+                  const category = categoryService.isValidCategory(slug) ? slug : null;
+                  return (
+                    <li key={link.href}>
+                      <SheetClose
+                        render={
+                          <Link
+                            href={link.href}
+                            className="flex items-center gap-2.5 rounded-md px-3 py-2.5 text-base font-medium text-foreground/90 hover:bg-muted hover:text-primary"
+                          />
+                        }
+                      >
+                        {category && (
+                          <CategoryIcon category={category} className="size-4 text-brand-blue" />
+                        )}
+                        {link.label}
+                      </SheetClose>
+                    </li>
+                  );
+                })}
               </ul>
             </SheetContent>
           </Sheet>

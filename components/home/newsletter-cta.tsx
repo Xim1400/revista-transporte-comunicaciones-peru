@@ -2,14 +2,16 @@
 
 import { useState } from "react";
 import { Mail } from "lucide-react";
+import { SignalTexture } from "@/components/ui/signal-texture";
 
 export function NewsletterCta() {
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
 
   return (
-    <section className="bg-brand-navy">
-      <div className="container-editorial flex flex-col items-center gap-6 py-11 text-center text-white sm:flex-row sm:justify-between sm:text-left">
+    <section className="relative overflow-hidden bg-brand-navy">
+      <SignalTexture className="pointer-events-none absolute inset-0 size-full" />
+      <div className="container-editorial relative flex flex-col items-center gap-6 py-11 text-center text-white sm:flex-row sm:justify-between sm:text-left">
         <div>
           <div className="mx-auto flex size-10 items-center justify-center bg-brand-yellow text-primary sm:mx-0">
             <Mail className="size-5" />

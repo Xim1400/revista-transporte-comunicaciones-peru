@@ -9,6 +9,7 @@ import { Breadcrumb } from "@/components/article/breadcrumb";
 import { ShareButtons } from "@/components/article/share-buttons";
 import { RelatedArticles } from "@/components/article/related-articles";
 import { ReadingProgress } from "@/components/article/reading-progress";
+import { CategoryIcon } from "@/components/news/category-icon";
 import { formatDate } from "@/lib/format";
 import { SITE } from "@/lib/site";
 
@@ -102,7 +103,13 @@ export default async function ArticlePage({
 
       <header className="container-editorial max-w-3xl py-7">
         <Breadcrumb category={article.category} title={article.title} />
-        <p className="kicker mt-3">{info.name}</p>
+        <Link
+          href={`/${article.category}`}
+          className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-brand-blue transition-opacity hover:opacity-80"
+        >
+          <CategoryIcon category={article.category} className="size-4 text-brand-yellow" />
+          {info.name}
+        </Link>
         <h1 className="mt-2 font-heading text-3xl font-bold leading-[1.15] tracking-tight sm:text-4xl">
           {article.title}
         </h1>
