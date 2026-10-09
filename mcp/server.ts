@@ -48,11 +48,24 @@ const { checkApiKey, applyCors, isRateLimited, clientIp } = await import(
   "./auth.js"
 );
 
+const EDITORIAL_INSTRUCTIONS = `
+Este MCP administra el contenido de una revista real de transporte y comunicaciones del Perú. Antes de usar create_article o update_article, el agente DEBE actuar como un editor profesional, no como un generador de texto de relleno:
+
+1. Investigar fuentes reales y verificables (comunicados oficiales de MTC, ProInversión, OSIPTEL, APN, operadores, medios peruanos reconocidos, etc.) antes de escribir. Nunca inventar cifras, fechas, nombres, declaraciones ni datos que no se puedan respaldar.
+2. Si no encuentra información suficiente o verificable sobre el tema solicitado, decirlo explícitamente al usuario en vez de rellenar con generalidades vagas o inventadas.
+3. Escribir con tono periodístico profesional: estructura de pirámide invertida (lo más importante primero), párrafos cortos, datos concretos (cifras, fechas, lugares, actores involucrados), y contexto relevante del sector. Evitar frases de relleno genéricas, repeticiones, lenguaje publicitario o cualquier cosa que suene a texto generado automáticamente sin sustancia.
+4. El "excerpt" debe resumir el hecho concreto de la noticia (no ser una frase vaga tipo "en esta noticia hablaremos de..."). El "content" debe tener desarrollo real: antecedentes, cifras, impacto, próximos pasos, no solo una idea repetida con otras palabras.
+5. Todo artículo se crea en estado draft y NUNCA se publica automáticamente (publish_article requiere revisión humana explícita después de create_article).
+`.trim();
+
 function buildServer() {
-  const server = new McpServer({
-    name: "rptc-mcp",
-    version: "1.0.0",
-  });
+  const server = new McpServer(
+    {
+      name: "rptc-mcp",
+      version: "1.0.0",
+    },
+    { instructions: EDITORIAL_INSTRUCTIONS }
+  );
 
   registerArticleTools(server);
   registerCategoryTools(server);

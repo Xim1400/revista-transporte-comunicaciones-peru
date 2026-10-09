@@ -83,7 +83,8 @@ export function registerArticleTools(server: McpServer) {
     {
       title: "Crear artículo",
       description:
-        "Crea un nuevo artículo en estado `draft`. NUNCA se publica automáticamente: requiere una llamada explícita a publish_article tras la revisión humana.",
+        "Crea un nuevo artículo en estado `draft`. NUNCA se publica automáticamente: requiere una llamada explícita a publish_article tras la revisión humana. " +
+        "IMPORTANTE: antes de llamar esta herramienta, investiga fuentes reales y verificables sobre el tema (no inventes cifras, fechas ni declaraciones) y escribe como un editor profesional del sector: estructura de pirámide invertida, datos concretos, excerpt que resuma el hecho (no una frase vaga), y contenido con desarrollo real. Evita cualquier texto genérico o de relleno que suene a bot.",
       inputSchema: CreateArticleSchema,
     },
     async (input) => {
@@ -130,7 +131,9 @@ export function registerArticleTools(server: McpServer) {
     "update_article",
     {
       title: "Actualizar artículo",
-      description: "Actualiza campos de un artículo existente (identificado por slug). No cambia su estado.",
+      description:
+        "Actualiza campos de un artículo existente (identificado por slug). No cambia su estado. " +
+        "Si vas a reescribir título, excerpt o contenido, aplica el mismo estándar editorial que en create_article: fuentes reales verificadas, tono periodístico profesional, sin relleno genérico.",
       inputSchema: UpdateArticleSchema,
     },
     async ({ slug, ...patch }) => {
