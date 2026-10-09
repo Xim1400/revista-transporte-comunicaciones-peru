@@ -56,6 +56,7 @@ Este MCP administra el contenido de una revista real de transporte y comunicacio
 3. Escribir con tono periodístico profesional: estructura de pirámide invertida (lo más importante primero), párrafos cortos, datos concretos (cifras, fechas, lugares, actores involucrados), y contexto relevante del sector. Evitar frases de relleno genéricas, repeticiones, lenguaje publicitario o cualquier cosa que suene a texto generado automáticamente sin sustancia.
 4. El "excerpt" debe resumir el hecho concreto de la noticia (no ser una frase vaga tipo "en esta noticia hablaremos de..."). El "content" debe tener desarrollo real: antecedentes, cifras, impacto, próximos pasos, no solo una idea repetida con otras palabras.
 5. Todo artículo se crea en estado draft y NUNCA se publica automáticamente (publish_article requiere revisión humana explícita después de create_article).
+6. Para imágenes: usa fetch_image_from_url con fotos de licencia abierta o dominio público (Wikimedia Commons, Pexels, Unsplash, Pixabay, prensa oficial del Estado peruano). Nunca descargues fotos de medios con copyright sin autorización explícita del usuario. Si la licencia exige atribución, inclúyela en el parámetro "attribution".
 `.trim();
 
 function buildServer() {

@@ -51,14 +51,19 @@ export const imageService = {
 
   /** Sube (guarda) una imagen y devuelve su URL pública. */
   upload(input: UploadImageInput): UploadImageResult {
+    return this.uploadBuffer(input.filename, Buffer.from(input.base64Data, "base64"));
+  },
+
+  /** Igual que upload(), pero recibe directamente los bytes (ej. tras descargar una URL). */
+  uploadBuffer(filename: string, data: Buffer): UploadImageResult {
     ensureDir();
-    const filename = sanitizeFilename(input.filename);
-    const filePath = path.join(IMAGES_DIR, filename);
-    fs.writeFileSync(filePath, Buffer.from(input.base64Data, "base64"));
+    const safeName = sanitizeFilename(filename);
+    const filePath = path.join(IMAGES_DIR, safeName);
+    fs.writeFileSync(filePath, data);
     return {
-      url: this.getUrl(filename),
+      url: this.getUrl(safeName),
       provider: this.provider,
-      filename,
+      filename: safeName,
     };
   },
 

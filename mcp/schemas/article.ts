@@ -117,3 +117,23 @@ export const UploadImageSchema = {
   base64Data: z.string().min(10, "El contenido de la imagen es obligatorio."),
   altText: z.string().max(200).optional(),
 };
+
+export const FetchImageFromUrlSchema = {
+  url: z
+    .string()
+    .url("Debe ser una URL http(s) válida.")
+    .refine((v) => /^https?:\/\//.test(v), "Solo se permiten URLs http(s)."),
+  filename: z
+    .string()
+    .min(3)
+    .max(120)
+    .regex(/^[a-zA-Z0-9.\-_]+\.(jpg|jpeg|png|webp|svg)$/i, "Nombre de archivo inválido."),
+  altText: z.string().max(200).optional(),
+  attribution: z
+    .string()
+    .max(300)
+    .optional()
+    .describe(
+      "Crédito/licencia de la imagen (ej. 'Foto: Juan Pérez, Wikimedia Commons, CC BY-SA 4.0'). Obligatorio si la licencia de origen exige atribución."
+    ),
+};
