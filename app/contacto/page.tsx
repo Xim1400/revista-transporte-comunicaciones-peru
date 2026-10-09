@@ -22,13 +22,13 @@ export default function ContactPage() {
       <div className="mt-8 space-y-4">
         <div className="flex items-center gap-3">
           <Mail className="size-5 text-brand-blue" />
-          <a href="mailto:redaccion@transytel.example" className="text-sm font-medium hover:text-brand-blue">
-            redaccion@transytel.example
+          <a href="mailto:redaccion@rptc.example" className="text-sm font-medium hover:text-brand-blue">
+            redaccion@rptc.example
           </a>
         </div>
         <div className="flex items-center gap-3">
           <MapPin className="size-5 text-brand-blue" />
-          <span className="text-sm font-medium">Madrid, España</span>
+          <span className="text-sm font-medium">Lima, Perú</span>
         </div>
       </div>
     </div>

@@ -62,7 +62,7 @@ describe("CreateArticleSchema (validación de create_article)", () => {
 
   it("aplica el autor por defecto cuando se omite", () => {
     const parsed = CreateArticle.parse(valid);
-    expect(parsed.author).toBe("Redacción TRANS&TEL");
+    expect(parsed.author).toBe("Redacción");
   });
 });
 

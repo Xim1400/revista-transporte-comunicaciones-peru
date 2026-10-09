@@ -32,7 +32,7 @@ export function registerCategoryTools(server: McpServer) {
     {
       title: "Crear categoría",
       description:
-        "Registra una nueva categoría para clasificar artículos. TRANS&TEL es una revista especializada en transporte y comunicaciones del Perú: usa esta herramienta solo para subtemas de ese ámbito (p. ej. 'ferrocarriles', 'movilidad-urbana'), nunca para secciones genéricas ajenas al sector (economía general, opinión, tecnología no relacionada, etc.). Nota: solo las 5 categorías principales (transporte, aeropuertos, puertos, telecomunicaciones, infraestructura) tienen una sección dedicada en la navegación de la revista; las categorías adicionales son utilizables en artículos y búsqueda, pero no generan automáticamente una nueva sección en la UI.",
+        "Registra una nueva categoría para clasificar artículos. Esta es una revista especializada en transporte y comunicaciones del Perú: usa esta herramienta solo para subtemas de ese ámbito (p. ej. 'ferrocarriles', 'movilidad-urbana'), nunca para secciones genéricas ajenas al sector (economía general, opinión, tecnología no relacionada, etc.). Nota: solo las 5 categorías principales (transporte, aeropuertos, puertos, telecomunicaciones, infraestructura) tienen una sección dedicada en la navegación de la revista; las categorías adicionales son utilizables en artículos y búsqueda, pero no generan automáticamente una nueva sección en la UI.",
       inputSchema: CreateCategorySchema,
     },
     async ({ slug, name, description }) => {

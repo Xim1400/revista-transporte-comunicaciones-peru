@@ -12,7 +12,7 @@ fs.rmSync(ARTICLES_DIR, { recursive: true, force: true });
 fs.mkdirSync(ARTICLES_DIR, { recursive: true });
 
 const AUTORES = [
-  "Redacción TRANS&TEL",
+  "Redacción",
   "Laura Medina",
   "Carlos Iñarra",
   "Sofía Vega",

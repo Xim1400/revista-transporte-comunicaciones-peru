@@ -39,8 +39,8 @@ export function Footer() {
         <div className="sm:col-span-2 lg:col-span-1">
           <BrandMark className="h-10" />
           <p className="mt-4 max-w-xs text-sm text-white/70">
-            {SITE.legalName}: noticias y análisis de transporte terrestre,
-            aéreo, marítimo, telecomunicaciones e infraestructura del Perú.
+            Noticias y análisis de transporte terrestre, aéreo, marítimo,
+            telecomunicaciones e infraestructura del Perú.
           </p>
           <div className="mt-5 flex items-center gap-3">
             <SocialLink href={SITE.social.twitter} label="Twitter / X">
@@ -81,8 +81,7 @@ export function Footer() {
       <div className="border-t border-white/10">
         <div className="container-editorial flex flex-col items-center justify-between gap-2 py-5 text-xs text-primary-foreground/60 sm:flex-row">
           <p>
-            © {year} {SITE.legalName} ({SITE.name}). Todos los derechos
-            reservados.
+            © {year} {SITE.name}. Todos los derechos reservados.
           </p>
           <p>Contenido de demostración con fines editoriales e ilustrativos.</p>
         </div>

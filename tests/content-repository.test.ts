@@ -5,7 +5,7 @@ import path from "node:path";
 
 // Aísla este test en un directorio temporal: nunca debe tocar las
 // noticias de demostración reales de /content/articles.
-const TMP_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "transytel-test-"));
+const TMP_DIR = fs.mkdtempSync(path.join(os.tmpdir(), "rptc-test-"));
 process.env.CONTENT_ARTICLES_DIR = TMP_DIR;
 
 const { contentRepository } = await import("../lib/content/repository");

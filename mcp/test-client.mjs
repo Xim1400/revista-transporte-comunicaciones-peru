@@ -1,4 +1,4 @@
-// Cliente de prueba end-to-end para el servidor MCP de TRANS&TEL.
+// Cliente de prueba end-to-end para el servidor MCP de la revista.
 // Lanza el servidor por stdio y ejecuta el flujo completo descrito en el
 // README: get_articles -> create_article -> get_article -> publish_article
 // -> update_article -> unpublish_article -> delete_article (limpieza).

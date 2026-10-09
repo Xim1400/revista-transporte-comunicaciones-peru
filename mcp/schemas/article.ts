@@ -54,7 +54,7 @@ export const CreateArticleSchema = {
   image: imageRefField,
   imageAlt: z.string().max(200).optional(),
   gallery: z.array(imageRefField).max(10).optional(),
-  author: z.string().min(2).max(80).default("Redacción TRANS&TEL"),
+  author: z.string().min(2).max(80).default("Redacción"),
   date: isoDateField.optional().describe("ISO 8601. Por defecto, la fecha actual."),
   tags: tagsField,
   featured: z.boolean().default(false),

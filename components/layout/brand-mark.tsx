@@ -19,7 +19,7 @@ export function BrandMark({ className }: { className?: string }) {
     >
       <Image
         src="/brand/logo-navbar.jpg"
-        alt={`${SITE.name} — Revista Peruana de Transportes y Comunicaciones`}
+        alt={`${SITE.name} — Inicio`}
         width={2494}
         height={556}
         priority

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Servidor MCP (Model Context Protocol) de TRANS&TEL.
+ * Servidor MCP (Model Context Protocol) de la Revista Peruana de Transportes y Comunicaciones.
  *
  * Expone herramientas de gestión de contenido (artículos, categorías,
  * destacados, imágenes, estadísticas y búsqueda) para que un cliente MCP
@@ -50,7 +50,7 @@ const { checkApiKey, applyCors, isRateLimited, clientIp } = await import(
 
 function buildServer() {
   const server = new McpServer({
-    name: "transytel-mcp",
+    name: "rptc-mcp",
     version: "1.0.0",
   });
 
@@ -68,7 +68,7 @@ async function startStdio() {
   const server = buildServer();
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error("[MCP] TRANS&TEL MCP listo (transporte stdio).");
+  console.error("[MCP] Servidor listo (transporte stdio).");
 }
 
 async function startHttp() {
@@ -138,7 +138,7 @@ async function startHttp() {
   });
 
   httpServer.listen(port, () => {
-    console.error(`[MCP] TRANS&TEL MCP listo (transporte http) en :${port}/mcp`);
+    console.error(`[MCP] Servidor listo (transporte http) en :${port}/mcp`);
   });
 }
 

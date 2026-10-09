@@ -1,4 +1,4 @@
-# TRANS&TEL
+# Revista Peruana de Transportes y Comunicaciones
 
 **Revista de Transporte y Comunicaciones del Perú**: transporte terrestre y ferroviario, aeropuertos, puertos, telecomunicaciones e infraestructura. Construida con Next.js (App Router) + TypeScript + Tailwind CSS, y preparada para que una IA gestione y publique noticias mediante un servidor **MCP (Model Context Protocol)** propio.
 
@@ -282,7 +282,7 @@ Cualquier cliente MCP compatible con stdio (Claude Desktop, etc.) puede apuntar 
 ```json
 {
   "mcpServers": {
-    "transytel": {
+    "rptc": {
       "command": "npx",
       "args": ["tsx", "/ruta/absoluta/al/proyecto/mcp/server.ts"]
     }
